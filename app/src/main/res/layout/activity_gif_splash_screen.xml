@@ -15,6 +15,6 @@
         android:layout_centerVertical="true"
         app:lottie_rawRes="@raw/test"
         app:lottie_loop="false"
-        app:lottie_autoPlay="true"/>
+        app:lottie_autoPlay="false"/>
 
 </RelativeLayout>
