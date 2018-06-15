@@ -3,6 +3,7 @@ package cbj.jamiechencbj.gif.Activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
@@ -38,6 +39,7 @@ public class GifSplashScreenActivity extends GifBaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        finish();
     }
 
     @Override
@@ -66,6 +68,7 @@ public class GifSplashScreenActivity extends GifBaseActivity {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     GifLogger.d("Animation is stop.");
+                    showMainListActivity();
                 }
             });
         } catch (Exception e){
@@ -76,6 +79,15 @@ public class GifSplashScreenActivity extends GifBaseActivity {
     private void playAnimation() {
         try {
             mainLottieAnimationView.playAnimation();
+        } catch (Exception e){
+            GifLogger.e(e.getLocalizedMessage());
+        }
+    }
+
+    private void showMainListActivity() {
+        try {
+            Intent intent = new Intent(this, GifMainListActivity.class);
+            startActivity(intent);
         } catch (Exception e){
             GifLogger.e(e.getLocalizedMessage());
         }
