@@ -1,7 +1,9 @@
 package cbj.jamiechencbj.gif.Activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -12,6 +14,14 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
+import com.androidnetworking.common.ANRequest;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONObject;
+
+import cbj.jamiechencbj.gif.Core.Contract;
 import cbj.jamiechencbj.gif.Core.GifBaseActivity;
 import cbj.jamiechencbj.gif.R;
 import cbj.jamiechencbj.gif.Utils.GifLogger;
@@ -42,6 +52,7 @@ public class GifMainListActivity extends GifBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        testing();
     }
 
     @Override
@@ -137,6 +148,79 @@ public class GifMainListActivity extends GifBaseActivity {
 //            });
         } catch (Exception e){
             GifLogger.e(e.getLocalizedMessage());
+        }
+    }
+
+    private void testing() {
+        try {
+            if (isNetworkConnected()){
+                /////////////////////////\ Debug \///////////////////////////////
+                GifLogger.d(Contract.GIPHY_SEARCH_ENDPOINT_API_TAG+" Request body:\nnone");
+                /////////////////////////////////////////////////////////////////
+                String urlString = String.format(Contract.GIPHY_SEARCH_ENDPOINT_URL_COMPONENT, "funny+cat", Contract.GIPHY_API_KEY);
+                ANRequest.GetRequestBuilder getRequestBuilder = standardGetRequestBuilder(urlString, true, false);
+                getRequestBuilder.setTag(Contract.GIPHY_SEARCH_ENDPOINT_API_TAG)
+                        .setPriority(Priority.MEDIUM)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    /////////////////////////\ Debug \///////////////////////////////
+                                    GifLogger.d(Contract.GIPHY_SEARCH_ENDPOINT_API_TAG+" Response:\n"+ response.toString());
+                                    /////////////////////////////////////////////////////////////////
+                                } catch (Exception e){
+                                    GifLogger.e(e.getLocalizedMessage());
+                                    showAlertDialogWithTwoButton(GifMainListActivity.this, "", e.getLocalizedMessage(), "retry", "cancel", new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            testing();
+                                        }
+                                    }, null, true);
+                                }
+                            }
+                            @Override
+                            public void onError(ANError anError) {
+                                String errorMessageString = "Please try again.";
+                                try {
+                                    if (anError != null) {
+                                        errorMessageString = "Error code: " + anError.getErrorCode() + "\nError Details: " + anError.getErrorDetail();
+                                        if (anError.getErrorCode() == 0) {
+                                            GifLogger.e("Error message: " + errorMessageString);
+                                            return;
+                                        }
+                                    }
+                                } catch (Exception e){
+                                    GifLogger.e(e.getMessage());
+                                    errorMessageString = e.getMessage();
+                                }
+                                showAlertDialogWithTwoButton(GifMainListActivity.this, "", errorMessageString, "retry", "cancel", new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        testing();
+                                    }
+                                }, null, true);
+                            }
+                        });
+            }
+            else {
+                showAlertDialogWithOneButton(GifMainListActivity.this, "Network Connection Problem", "Network connection appears to be offline. Please check your network connection.", "Settings", new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }, true);
+            }
+        } catch (Exception e){
+            GifLogger.e(e.getLocalizedMessage());
+            showAlertDialogWithTwoButton(GifMainListActivity.this, "", e.getLocalizedMessage(), "retry", "cancel", new Runnable() {
+                @Override
+                public void run() {
+                    testing();
+                }
+            }, null, true);
         }
     }
 

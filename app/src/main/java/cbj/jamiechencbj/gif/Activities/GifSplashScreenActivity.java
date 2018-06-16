@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.RelativeLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -33,7 +34,7 @@ public class GifSplashScreenActivity extends GifBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        playAnimation();
+        checkStateAndDoAppropriateWork();
     }
 
     @Override
@@ -90,6 +91,22 @@ public class GifSplashScreenActivity extends GifBaseActivity {
             startActivity(intent);
         } catch (Exception e){
             GifLogger.e(e.getLocalizedMessage());
+        }
+    }
+
+    private void checkStateAndDoAppropriateWork() {
+        if (isNetworkConnected()){
+            playAnimation();
+        }
+        else {
+            showAlertDialogWithOneButton(this, "Network Connection Problem", "Network connection appears to be offline. Please check your network connection.", "Settings", new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }, false);
         }
     }
 

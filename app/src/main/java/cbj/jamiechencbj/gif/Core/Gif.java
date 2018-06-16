@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import cbj.jamiechencbj.gif.Utils.GifLogger;
 import cbj.jamiechencbj.gif.Utils.GifNetworkLoggingInterceptor;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.OkHttpClient;
 
 public class Gif extends Application {
@@ -27,6 +29,7 @@ public class Gif extends Application {
         setUpSharePreferences();
         setAppropriateDebugOptions();
         setAppropriateFastAndroidNetworking();
+        setUpRealm();
     }
 
     private void setUpSharePreferences() {
@@ -51,6 +54,35 @@ public class Gif extends Application {
                     .addInterceptor(new GifNetworkLoggingInterceptor())
                     .build();
             AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
+        } catch (Exception e){
+            GifLogger.e(e.getLocalizedMessage());
+        }
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public static SharedPreferences.Editor getEditor() {
+        return editor;
+    }
+
+    private void setUpRealm() {
+        try {
+            Realm.init(context);
+//        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+//                .name(REALM_DB_NAME)
+//                .schemaVersion(DB_SCHEMA_VERSION)
+//                .migration(new AFTRealmMigration())
+//                .build();
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            Realm.setDefaultConfiguration(realmConfig);
         } catch (Exception e){
             GifLogger.e(e.getLocalizedMessage());
         }

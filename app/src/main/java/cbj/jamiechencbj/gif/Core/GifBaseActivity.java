@@ -1,5 +1,10 @@
 package cbj.jamiechencbj.gif.Core;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -9,6 +14,7 @@ import java.util.TimeZone;
 import java.util.concurrent.Executors;
 
 import cbj.jamiechencbj.gif.R;
+import cbj.jamiechencbj.gif.Utils.GifLogger;
 
 public class GifBaseActivity extends AppCompatActivity {
 
@@ -16,6 +22,25 @@ public class GifBaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gif_base);
+    }
+
+    /**
+     * Check network connection
+     *
+     * @return true if network is connected
+     *         otherwise, false
+     */
+    public boolean isNetworkConnected() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                return true;
+            }
+        } catch (Exception e){
+            GifLogger.e(e.getLocalizedMessage());
+        }
+        return false;
     }
 
     /**
@@ -116,6 +141,80 @@ public class GifBaseActivity extends AppCompatActivity {
             getRequestBuilder.setExecutor(Executors.newSingleThreadExecutor());
         }
         return getRequestBuilder;
+    }
+
+    /**
+     * Alert dialog with one button
+     *
+     * @param context
+     * @param title
+     * @param message
+     * @param buttonName
+     * @param buttonTapHandler
+     * @param cancelable
+     */
+    public void showAlertDialogWithOneButton(Context context,
+                                             String title,
+                                             String message,
+                                             String buttonName,
+                                             final Runnable buttonTapHandler,
+                                             boolean cancelable) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(buttonName, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (buttonTapHandler != null) {
+                            buttonTapHandler.run();
+                        }
+                    }
+                })
+                .setCancelable(cancelable);
+        alertDialogBuilder.show();
+    }
+
+    /**
+     * Alert dialog with two buttons
+     *
+     * @param context
+     * @param title
+     * @param message
+     * @param positiveButtonName
+     * @param negativeButtonName
+     * @param positiveButtonTapHandler
+     * @param negativeButtonTapHandler
+     * @param cancelable
+     */
+    public void showAlertDialogWithTwoButton(Context context,
+                                             String title,
+                                             String message,
+                                             String positiveButtonName,
+                                             String negativeButtonName,
+                                             final Runnable positiveButtonTapHandler,
+                                             final Runnable negativeButtonTapHandler,
+                                             boolean cancelable) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(positiveButtonName, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (positiveButtonTapHandler != null) {
+                            positiveButtonTapHandler.run();
+                        }
+                    }
+                })
+                .setNegativeButton(negativeButtonName, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (negativeButtonTapHandler != null) {
+                            negativeButtonTapHandler.run();
+                        }
+                    }
+                })
+                .setCancelable(cancelable);
+        alertDialogBuilder.show();
     }
 
 }
