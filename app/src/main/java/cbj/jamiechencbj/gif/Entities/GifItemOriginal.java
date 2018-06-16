@@ -93,6 +93,13 @@ public class GifItemOriginal extends RealmObject {
         this.webpSize = webpSize;
     }
 
+    /**
+     * V1 API Parser
+     *
+     * @param jsonObject
+     * @return GifItemOriginal
+     * @throws JSONException
+     */
     public static GifItemOriginal getGifItemOriginalFromJson(JSONObject jsonObject) throws JSONException {
         GifItemOriginal gifItemOriginal = new GifItemOriginal();
 
@@ -139,7 +146,25 @@ public class GifItemOriginal extends RealmObject {
         }
 
         gifItemOriginal.setMp4Size("0");
+        if (jsonObject.has(Contract.GIF_PARAMETER_KEY_MP4_SIZE)){
+            if (!jsonObject.isNull(Contract.GIF_PARAMETER_KEY_MP4_SIZE)){
+                gifItemOriginal.setMp4Size(jsonObject.getString(Contract.GIF_PARAMETER_KEY_MP4_SIZE));
+            }
+        }
 
+        gifItemOriginal.setWebpUrl("");
+        if (jsonObject.has(Contract.GIF_PARAMETER_KEY_WEBP)){
+            if (!jsonObject.isNull(Contract.GIF_PARAMETER_KEY_WEBP)){
+                gifItemOriginal.setWebpUrl(jsonObject.getString(Contract.GIF_PARAMETER_KEY_WEBP));
+            }
+        }
+
+        gifItemOriginal.setWebpSize("0");
+        if (jsonObject.has(Contract.GIF_PARAMETER_KEY_WEBP_SIZE)){
+            if (!jsonObject.isNull(Contract.GIF_PARAMETER_KEY_WEBP_SIZE)){
+                gifItemOriginal.setWebpSize(jsonObject.getString(Contract.GIF_PARAMETER_KEY_WEBP_SIZE));
+            }
+        }
 
         return gifItemOriginal;
     }

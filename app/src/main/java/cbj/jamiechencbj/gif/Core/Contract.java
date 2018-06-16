@@ -45,14 +45,33 @@ public class Contract {
     /**
      * Parameters name
      */
-    public static final String GIF_PARAMETER_KEY_URL       = "url";
-    public static final String GIF_PARAMETER_KEY_WIDTH     = "width";
-    public static final String GIF_PARAMETER_KEY_HEIGHT    = "height";
-    public static final String GIF_PARAMETER_KEY_SIZE      = "size";
-    public static final String GIF_PARAMETER_KEY_FRAMES    = "frames";
-    public static final String GIF_PARAMETER_KEY_MP4       = "mp4";
-    public static final String GIF_PARAMETER_KEY_MP4_SIZE  = "mp4_size";
-    public static final String GIF_PARAMETER_KEY_WEBP      = "webp";
-    public static final String GIF_PARAMETER_KEY_WEBP_SIZE = "webp_size";
+    public static final String GIF_PARAMETER_KEY_URL               = "url";
+    public static final String GIF_PARAMETER_KEY_WIDTH             = "width";
+    public static final String GIF_PARAMETER_KEY_HEIGHT            = "height";
+    public static final String GIF_PARAMETER_KEY_SIZE              = "size";
+    public static final String GIF_PARAMETER_KEY_FRAMES            = "frames";
+    public static final String GIF_PARAMETER_KEY_MP4               = "mp4";
+    public static final String GIF_PARAMETER_KEY_MP4_SIZE          = "mp4_size";
+    public static final String GIF_PARAMETER_KEY_WEBP              = "webp";
+    public static final String GIF_PARAMETER_KEY_WEBP_SIZE         = "webp_size";
+    public static final String GIF_PARAMETER_KEY_TYPE              = "type";
+    public static final String GIF_PARAMETER_KEY_ID                = "id";
+    public static final String GIF_PARAMETER_KEY_EMBED_URL         = "embed_url";
+    public static final String GIF_PARAMETER_KEY_SOURCE            = "source";
+    public static final String GIF_PARAMETER_KEY_SOURCE_TLD        = "source_tld";
+    public static final String GIF_PARAMETER_KEY_SOURCE_POST_URL   = "source_post_url";
+    public static final String GIF_PARAMETER_KEY_IMPORT_DATETIME   = "import_datetime";
+    public static final String GIF_PARAMETER_KEY_TRENDING_DATETIME = "trending_datetime";
+    public static final String GIF_PARAMETER_KEY_TITLE             = "title";
+    public static final String GIF_PARAMETER_KEY_IMAGES            = "images";
+    public static final String GIF_PARAMETER_KEY_ORIGINAL          = "original";
+    public static final String GIF_PARAMETER_KEY_ORIGINAL_STILL    = "original_still";
+    public static final String GIF_PARAMETER_KEY_META              = "meta";
+    public static final String GIF_PARAMETER_KEY_STATUS            = "status";
+    public static final String GIF_PARAMETER_KEY_MSG               = "msg";
+    public static final String GIF_PARAMETER_KEY_PAGINATION        = "pagination";
+    public static final String GIF_PARAMETER_KEY_TOTAL_COUNT       = "total_count";
+    public static final String GIF_PARAMETER_KEY_COUNT             = "count";
+    public static final String GIF_PARAMETER_KEY_OFFSET            = "offset";
 
 }
