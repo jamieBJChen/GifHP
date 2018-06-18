@@ -55,8 +55,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/gif_main_list_top_app_bar_inner_bottom_tags_text_view"
-                            android:text="#hello"
+                            android:text="#Hello"
                             android:textSize="18dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:maxEms="8"
+                            android:layout_marginRight="16dp"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/gif_main_list_top_app_bar_inner_bottom_ranking_image_view"/>
 

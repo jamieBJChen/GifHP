@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="gifWhiteColor">#FFFFFF</color>
     <color name="gifGhostWhiteColor">#F8F8FF</color>
+    <color name="gifBlackColor">#000000</color>
+    <color name="gifGrayColor">#383838</color>
 </resources>

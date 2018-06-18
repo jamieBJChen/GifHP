@@ -1,5 +1,7 @@
 package cbj.jamiechencbj.gif.Entities;
 
+import android.support.v7.util.DiffUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -244,5 +246,20 @@ public class GifItem extends RealmObject {
 
         return gifItem;
     }
+
+    /**
+     * Item callback
+     */
+    public static DiffUtil.ItemCallback<GifItem> ITEM_CALLBACK = new DiffUtil.ItemCallback<GifItem>() {
+        @Override
+        public boolean areItemsTheSame(GifItem oldItem, GifItem newItem) {
+            return oldItem.id.equals(newItem.id);
+        }
+
+        @Override
+        public boolean areContentsTheSame(GifItem oldItem, GifItem newItem) {
+            return oldItem.id.equals(newItem.id);
+        }
+    };
 
 }

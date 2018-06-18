@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.androidnetworking.AndroidNetworking;
+import com.zhuinden.monarchy.Monarchy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ public class Gif extends Application {
     private static Context context;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
+    private static Monarchy monarchy;
 
     private static final String SHARE_PREFERENCES_NAME = "GifHPSharePreferencesNameFile";
 
@@ -29,7 +31,7 @@ public class Gif extends Application {
         setUpSharePreferences();
         setAppropriateDebugOptions();
         setAppropriateFastAndroidNetworking();
-        setUpRealm();
+        setUpMonarchy();
     }
 
     private void setUpSharePreferences() {
@@ -86,6 +88,24 @@ public class Gif extends Application {
         } catch (Exception e){
             GifLogger.e(e.getLocalizedMessage());
         }
+    }
+
+    private void setUpMonarchy() {
+        try {
+            Monarchy.init(context);
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            monarchy = new Monarchy.Builder()
+                    .setRealmConfiguration(realmConfig)
+                    .build();
+        } catch (Exception e){
+            GifLogger.e(e.getLocalizedMessage());
+        }
+    }
+
+    public static Monarchy getMonarchy() {
+        return monarchy;
     }
 
 }

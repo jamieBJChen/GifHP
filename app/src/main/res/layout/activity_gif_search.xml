@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.GifSearchActivity"
+    android:id="@+id/gif_search_root_relative_layout"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/gif_search_top_bar_root_relative_layout"
+        android:background="@color/gifGhostWhiteColor"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:id="@+id/gif_search_top_bar_left_image_view"
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_clear"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif_search_top_bar_left_text_view"
+            android:text="Type keywords &amp; Search"
+            android:textSize="18dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/gif_search_top_bar_left_image_view"
+            android:paddingLeft="8dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:id="@+id/gif_search_top_bar_bottom_placeholder_relative_layout"
+            android:background="@color/gifGrayColor"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gif_search_root_scroll_view"
+        android:fillViewport="true"
+        android:layout_below="@+id/gif_search_top_bar_root_relative_layout"
+        android:layout_above="@+id/gif_search_bottom_button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif_search_inner_linear_layout"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp">
+
+            <cbj.jamiechencbj.gif.customviews.LottieFontViewGroupVJ
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gif_search_lottie_font_view_group"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gif_search_bottom_button"
+        android:text="Search"
+        android:textSize="16dp"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"/>
+
+</RelativeLayout>

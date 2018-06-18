@@ -23,7 +23,7 @@ public class Contract {
     /**
      * Giphy endpoint url component
      */
-    public static final String GIPHY_SEARCH_ENDPOINT_URL_COMPONENT = "http://api.giphy.com/v1/gifs/search?q=%s&api_key=%s";
+    public static final String GIPHY_SEARCH_ENDPOINT_URL_COMPONENT = "http://api.giphy.com/v1/gifs/search?q=%s&api_key=%s&limit=%d&offset=%d";
 
     /**
      * Tags
@@ -73,5 +73,16 @@ public class Contract {
     public static final String GIF_PARAMETER_KEY_TOTAL_COUNT       = "total_count";
     public static final String GIF_PARAMETER_KEY_COUNT             = "count";
     public static final String GIF_PARAMETER_KEY_OFFSET            = "offset";
+    public static final String GIF_PARAMETER_KEY_DATA              = "data";
+
+    /**
+     * Share preferences key
+     */
+    public static final String GIF_TOTAL_COUNT_DOC      = "gif_total_count_doc";
+    public static final String GIF_COUNT_DOC            = "gif_count_doc";
+    public static final String GIF_OFFSET_DOC           = "gif_offset_doc";
+    public static final String GIF_CAN_LOAD_DOC         = "gif_can_load_doc";
+    public static final String GIF_SEARCH_KEYWORDS_DOC  = "gif_search_keywords_doc";
+    public static final String GIF_HAS_NEW_KEYWORDS_DOC = "gif_has_new_keywords_doc";
 
 }
