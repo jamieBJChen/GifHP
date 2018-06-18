@@ -14,5 +14,17 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-    
+
+    <style name="RatingBarBigWithPadding" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_stars_big_with_padding</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:maxHeight">48dp</item>
+    </style>
+
+    <style name="RatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_stars</item>
+        <item name="android:minHeight">11dip</item>
+        <item name="android:maxHeight">11dip</item>
+    </style>
+
 </resources>

@@ -74,6 +74,8 @@ public class Contract {
     public static final String GIF_PARAMETER_KEY_COUNT             = "count";
     public static final String GIF_PARAMETER_KEY_OFFSET            = "offset";
     public static final String GIF_PARAMETER_KEY_DATA              = "data";
+    public static final String GIF_PARAMETER_KEY_FIXED_WIDTH_DOWNSAMPLED = "fixed_width_downsampled";
+    public static final String GIF_PARAMETER_KEY_USER_RATING       = "userRating";
 
     /**
      * Share preferences key

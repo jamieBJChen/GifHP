@@ -32,14 +32,26 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/gif_list_item_inner_title_text_view"
                 android:text="Title"
-                android:textSize="16dp"
-                android:textAlignment="center"
+                android:textSize="15dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:maxEms="8"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gif_list_item_inner_rating_bar"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                style="@style/RatingBar"/>
 
         </LinearLayout>
 

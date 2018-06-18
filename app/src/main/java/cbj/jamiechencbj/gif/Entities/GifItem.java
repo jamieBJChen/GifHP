@@ -29,6 +29,7 @@ public class GifItem extends RealmObject {
     private double avgRating;
     private GifItemOriginal gifItemOriginal;
     private GifItemOriginalStill gifItemOriginalStill;
+    private GifItemFixedWidthDownsampled gifItemFixedWidthDownsampled;
 
     public String getId() {
         return id;
@@ -142,6 +143,14 @@ public class GifItem extends RealmObject {
         this.gifItemOriginalStill = gifItemOriginalStill;
     }
 
+    public GifItemFixedWidthDownsampled getGifItemFixedWidthDownsampled() {
+        return gifItemFixedWidthDownsampled;
+    }
+
+    public void setGifItemFixedWidthDownsampled(GifItemFixedWidthDownsampled gifItemFixedWidthDownsampled) {
+        this.gifItemFixedWidthDownsampled = gifItemFixedWidthDownsampled;
+    }
+
     /**
      * V1 API Parser
      *
@@ -222,9 +231,9 @@ public class GifItem extends RealmObject {
             }
         }
 
-        gifItem.setUserRating(0);
+        gifItem.setUserRating(0.0);
 
-        gifItem.setAvgRating(0);
+        gifItem.setAvgRating(0.0);
 
         if (jsonObject.has(Contract.GIF_PARAMETER_KEY_IMAGES)){
             if (!jsonObject.isNull(Contract.GIF_PARAMETER_KEY_IMAGES)){
@@ -239,6 +248,12 @@ public class GifItem extends RealmObject {
                     if (!imagesJsonObject.isNull(Contract.GIF_PARAMETER_KEY_ORIGINAL_STILL)){
                         JSONObject originalStillJsonObject = imagesJsonObject.getJSONObject(Contract.GIF_PARAMETER_KEY_ORIGINAL_STILL);
                         gifItem.setGifItemOriginalStill(GifItemOriginalStill.getGifItemOriginalStillFromJson(originalStillJsonObject));
+                    }
+                }
+                if (imagesJsonObject.has(Contract.GIF_PARAMETER_KEY_FIXED_WIDTH_DOWNSAMPLED)){
+                    if (!imagesJsonObject.isNull(Contract.GIF_PARAMETER_KEY_FIXED_WIDTH_DOWNSAMPLED)){
+                        JSONObject fixedWidthDownsampledJsonObject = imagesJsonObject.getJSONObject(Contract.GIF_PARAMETER_KEY_FIXED_WIDTH_DOWNSAMPLED);
+                        gifItem.setGifItemFixedWidthDownsampled(GifItemFixedWidthDownsampled.getGifItemFixedWidthDownsampledFromJson(fixedWidthDownsampledJsonObject));
                     }
                 }
             }
@@ -258,7 +273,14 @@ public class GifItem extends RealmObject {
 
         @Override
         public boolean areContentsTheSame(GifItem oldItem, GifItem newItem) {
-            return oldItem.id.equals(newItem.id);
+            boolean areSame;
+            if (oldItem.id.equals(newItem.id) && oldItem.userRating == newItem.userRating){
+                areSame = true;
+            }
+            else {
+                areSame = false;
+            }
+            return areSame;
         }
     };
 

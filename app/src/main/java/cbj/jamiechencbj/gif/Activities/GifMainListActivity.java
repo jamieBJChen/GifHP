@@ -37,10 +37,12 @@ import cbj.jamiechencbj.gif.Core.GifBaseActivity;
 import cbj.jamiechencbj.gif.Entities.GifItem;
 import cbj.jamiechencbj.gif.Entities.GifItemOriginal;
 import cbj.jamiechencbj.gif.Entities.GifItemOriginalStill;
+import cbj.jamiechencbj.gif.Entities.GifItemRatingPersist;
 import cbj.jamiechencbj.gif.R;
 import cbj.jamiechencbj.gif.Utils.GifLogger;
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.Sort;
 
 public class GifMainListActivity extends GifBaseActivity {
 
@@ -65,6 +67,7 @@ public class GifMainListActivity extends GifBaseActivity {
 
     private final int defaultPageSize         = 10;
     private final int defaultPreFetchDistence = 3;
+    private boolean sortByHighestRanking      = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +144,7 @@ public class GifMainListActivity extends GifBaseActivity {
                 @Override
                 public void onClick(View v) {
                     // Sort the list
+                    sortByHighestRanking = true;
                 }
             });
         } catch (Exception e){
@@ -211,13 +215,17 @@ public class GifMainListActivity extends GifBaseActivity {
 
     private void setUpBottomRecyclerView() {
         try {
-            gifPagedRecyclerViewAdapter = new GifPagedRecyclerViewAdapter();
+            gifPagedRecyclerViewAdapter = new GifPagedRecyclerViewAdapter(this);
             bottomRecyclerView.setHasFixedSize(true);
             bottomRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             bottomRecyclerView.setAdapter(gifPagedRecyclerViewAdapter);
             gifItemDataSourceFactory = Gif.getMonarchy().createDataSourceFactory(new Monarchy.Query<GifItem>() {
                 @Override
                 public RealmQuery<GifItem> createQuery(Realm realm) {
+                    GifLogger.d("Update");
+                    if (sortByHighestRanking){
+                        return realm.where(GifItem.class).sort(Contract.GIF_PARAMETER_KEY_USER_RATING, Sort.DESCENDING);
+                    }
                     return realm.where(GifItem.class);
                 }
             });
@@ -286,6 +294,15 @@ public class GifMainListActivity extends GifBaseActivity {
                                                                 public void execute(Realm realm) {
                                                                     try {
                                                                         GifItem gifItem = GifItem.getGifItemFromJson(gifItemJsonObject);
+                                                                        GifItemRatingPersist gifItemRatingPersist = realm.where(GifItemRatingPersist.class)
+                                                                                .equalTo(Contract.GIF_PARAMETER_KEY_ID, gifItem.getId()).findFirst();
+                                                                        if (gifItemRatingPersist != null){
+                                                                            gifItem.setUserRating(gifItemRatingPersist.getUserRating());
+                                                                        }
+                                                                        else {
+                                                                            GifItemRatingPersist newGifItemRatingPersist = GifItemRatingPersist.getGifItemRatingPersistWith(gifItem.getId(), 0.0);
+                                                                            realm.copyToRealmOrUpdate(newGifItemRatingPersist);
+                                                                        }
                                                                         realm.copyToRealmOrUpdate(gifItem);
                                                                     } catch (Exception e){
                                                                         GifLogger.e(e.getLocalizedMessage());
